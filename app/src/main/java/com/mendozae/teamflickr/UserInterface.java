@@ -24,6 +24,7 @@ import android.widget.TextView;
 
 import java.util.Objects;
 
+import static com.mendozae.teamflickr.SearchFeed.searchFeedSharedPreferences;
 import static com.mendozae.teamflickr.SearchFeed.searchView;
 
 public class UserInterface extends AppCompatActivity {
@@ -40,6 +41,7 @@ public class UserInterface extends AppCompatActivity {
     private  ViewPager viewPager;
     private TabLayout tabLayout;
     private InputMethodManager imm;
+    private int tabIconColor2, tabIconColor, tabPosition;
     /**
      * The {@link ViewPager} that will host the section contents.
      */
@@ -48,13 +50,10 @@ public class UserInterface extends AppCompatActivity {
     @Override
     public void onStart(){
         super.onStart();
-        Intent intent = getIntent();
-        String allowance = intent.getStringExtra("Intent");
 
-        if(allowance !=null && allowance.equals("Yes")){
-            int tabPosition = intent.getIntExtra("Tab", 4);
-            viewPager.setCurrentItem(tabPosition);
-        }
+        tabPosition = MainActivity.userInterfaceSharedPreferences.getInt("Tab", 2);
+
+        viewPager.setCurrentItem(tabPosition);
 
 
     }
@@ -69,11 +68,15 @@ public class UserInterface extends AppCompatActivity {
 
         imm = (InputMethodManager)   getSystemService(Context.INPUT_METHOD_SERVICE);
 
+         tabIconColor2 = ContextCompat.getColor(UserInterface.this, R.color.tabUnselectedIconColor);
+        tabIconColor = ContextCompat.getColor(UserInterface.this, R.color.tabSelectedIconColor);
 
         tabLayout = (TabLayout) findViewById(R.id.tab_layout); //initializes the tablayout object
         for(int i = 0; i <=3; i++) {
             tabLayout.addTab(tabLayout.newTab()); //adds four tabs to the tablayout
         }
+
+
 
         //sets the tab icon for each tab
         tabLayout.getTabAt(0).setIcon(R.drawable.ic_photo_library);
@@ -99,6 +102,7 @@ public class UserInterface extends AppCompatActivity {
         viewPager.setOffscreenPageLimit(2);
         viewPager.setAdapter(adapter);
 
+
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener(){ //a listener for when tabs are selected
 
@@ -106,8 +110,9 @@ public class UserInterface extends AppCompatActivity {
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
                 //when a tab is selected the viewPager moves to that tab location
-                int tabIconColor = ContextCompat.getColor(UserInterface.this, R.color.tabSelectedIconColor); //changes color of tab to highlighted
+                //changes color of tab to highlighted
                 (tab.getIcon()).setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
+
                // imm.hideSoftInputFromWindow(SearchView.getWindowToken(), 0);
                 if(searchView !=null){
                     InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -119,8 +124,8 @@ public class UserInterface extends AppCompatActivity {
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-                int tabIconColor = ContextCompat.getColor(UserInterface.this, R.color.tabUnselectedIconColor); //changes color of tab to unhighlighted
-                (tab.getIcon()).setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
+                //changes color of tab to unhighlighted
+                (tab.getIcon()).setColorFilter(tabIconColor2, PorterDuff.Mode.SRC_IN);
             }
 
             @Override
