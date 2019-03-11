@@ -171,7 +171,7 @@ public class SearchableActivity extends AppCompatActivity {
     {
         //replaces the default 'Back' button action
         if(keyCode==KeyEvent.KEYCODE_BACK)   {
-// something here
+            // something here
             finish();
         }
         return true;

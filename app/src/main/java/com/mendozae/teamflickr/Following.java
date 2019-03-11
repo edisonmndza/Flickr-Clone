@@ -140,6 +140,7 @@ public class Following extends AppCompatActivity {
                         followingOrNotFollowingTemp.add("Followed");
                         ArrayList<String> followingOrNotTemp2 = (ArrayList<String>) snapshot.get("FollowingOrNotFollowers");
                         ArrayList<String> followers = (ArrayList<String>) snapshot.get("Followers");
+//                        followingNames = (ArrayList<String>) snapshot.get("Following");
                         if(followers.contains(name)){
                             Log.i("info", "yes");
                             followingOrNotTemp2.set(followers.indexOf(name), "Followed");
@@ -192,6 +193,7 @@ public class Following extends AppCompatActivity {
                         ArrayList<String> followingOrNotTemp = (ArrayList<String>) snapshot.get("FollowingOrNotFollowing");
                         ArrayList<String> followingOrNotTemp2 = (ArrayList<String>) snapshot.get("FollowingOrNotFollowers");
                         ArrayList<String> followers = (ArrayList<String>) snapshot.get("Followers");
+//                       followingNames = (ArrayList<String>) snapshot.get("Following");
                         if(followers.contains(name)){
                             Log.i("info", "yes");
                             followingOrNotTemp2.set(followers.indexOf(name), "+  Follow");
